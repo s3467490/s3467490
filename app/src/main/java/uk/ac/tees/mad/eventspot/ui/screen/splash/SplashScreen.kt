@@ -1,4 +1,4 @@
-package uk.ac.tees.mad.eventspot.ui.screen
+package uk.ac.tees.mad.eventspot.ui.screen.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -17,15 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import uk.ac.tees.mad.eventspot.R
-import uk.ac.tees.mad.eventspot.ui.theme.EventSpotTheme
+import uk.ac.tees.mad.eventspot.utils.Constants
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen(navController: NavController) {
     val appName = "EventSpot"
     var displayedText by remember { mutableStateOf("") }
 
@@ -33,6 +33,13 @@ fun SplashScreen() {
         appName.forEachIndexed { index, _ ->
             delay(100L)
             displayedText = appName.substring(0, index + 1)
+        }
+        if(displayedText.length>=9){
+            navController.navigate(Constants.HOME_SCREEN){
+                popUpTo(Constants.SPLASH_SCREEN){
+                    inclusive = true
+                }
+            }
         }
     }
 
@@ -56,13 +63,5 @@ fun SplashScreen() {
                 fontWeight = FontWeight.Bold
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun SplashPrev() {
-    EventSpotTheme {
-        SplashScreen()
     }
 }
