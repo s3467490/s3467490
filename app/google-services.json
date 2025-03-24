@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "308873884264",
+    "project_id": "eventspot-bf079",
+    "storage_bucket": "eventspot-bf079.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308873884264:android:a7d90c033acc2dce3c41dd",
+        "android_client_info": {
+          "package_name": "uk.ac.tees.mad.eventspot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8Kl5loxL4NLa3bmbw6Dgew3jMMll_E4g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
