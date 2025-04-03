@@ -1,6 +1,11 @@
 package uk.ac.tees.mad.eventspot.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "event_table")
 data class Event(
+    @PrimaryKey val id:String = "",
     val title: String="",
     val date: String="",
     val time: String="",
