@@ -11,7 +11,7 @@ import uk.ac.tees.mad.eventspot.model.Event
 interface EventDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addEvent(entity:Event)
+    suspend fun addEvents(entities:List<Event>)
 
     @Query("SELECT * FROM event_table")
     fun getEvents():Flow<List<Event>>

@@ -97,13 +97,3 @@ fun EventItem(event: Event, borderColor: Color) {
         }
     }
 }
-
-
-@Preview(showBackground = true)
-@Composable
-private fun EventItemPrev() {
-    val event = Event("Tech Innovation Summit", "2025-04-15", "10:00 AM", "London, UK", 51.5074, -0.1278, "A gathering of industry leaders discussing the future of AI and technology.")
-    EventSpotTheme {
-        EventItem(event, Color.Magenta)
-    }
-}
