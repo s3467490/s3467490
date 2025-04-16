@@ -2,6 +2,7 @@ package uk.ac.tees.mad.eventspot.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.Gson
 
 @Entity(tableName = "event_table")
 data class Event(
@@ -13,5 +14,15 @@ data class Event(
     val latitude: Double=0.0,
     val longitude: Double=0.0,
     val details: String=""
-)
+){
+    fun toJson(): String {
+        return Gson().toJson(this)
+    }
+
+    companion object {
+        fun fromJson(json: String): Event {
+            return Gson().fromJson(json, Event::class.java)
+        }
+    }
+}
 

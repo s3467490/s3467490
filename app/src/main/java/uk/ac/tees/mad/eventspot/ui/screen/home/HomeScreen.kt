@@ -1,19 +1,16 @@
 package uk.ac.tees.mad.eventspot.ui.screen.home
 
 import android.Manifest
-import android.content.ClipData.Item
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -28,24 +25,25 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import uk.ac.tees.mad.eventspot.R
+import uk.ac.tees.mad.eventspot.utils.Constants
 import uk.ac.tees.mad.eventspot.utils.Utils.calculateDistance
+import java.net.URLEncoder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
+fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
     val colorList = listOf(Color.Red, Color.Magenta, Color.Green, Color.Yellow, Color.Cyan)
     val eventList by viewModel.eventList.collectAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
@@ -128,10 +126,14 @@ fun HomeScreen(viewModel: HomeViewModel) {
                         )
                     }
                 }
-                items(eventList.filter {
+                itemsIndexed(eventList.filter {
                     calculateDistance(userLocation!!, it.latitude, it.longitude) < sliderValue
-                }) { event ->
-                    EventItem(event, colorList.random())
+                }) { index, event ->
+                    EventItem(event, colorList[index%5],
+                        onClick = {
+                            val json = URLEncoder.encode(event.toJson(), "UTF-8")
+                            navController.navigate(Constants.DETAILS_SCREEN+"/$json")
+                        })
                 }
             }
         }

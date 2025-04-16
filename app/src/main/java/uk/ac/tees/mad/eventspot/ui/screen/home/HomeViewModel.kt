@@ -7,24 +7,17 @@ import android.location.Location
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.toObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import uk.ac.tees.mad.eventspot.data.Repository
 import uk.ac.tees.mad.eventspot.model.Event
-import uk.ac.tees.mad.eventspot.utils.Utils
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: Repository,
     private val fusedLocationClient: FusedLocationProviderClient,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
@@ -37,7 +30,6 @@ class HomeViewModel @Inject constructor(
     val isRefreshing: StateFlow<Boolean> get() = _isRefreshing
 
     private val _hasPermission = MutableStateFlow(false)
-    val hasPermission: StateFlow<Boolean> get() = _hasPermission
 
     private val _userLocation = MutableStateFlow<Location?>(null)
     val userLocation: StateFlow<Location?> get() = _userLocation
@@ -57,13 +49,9 @@ class HomeViewModel @Inject constructor(
                     doc.toObject(Event::class.java)
                 }
                 _eventList.value = events
-                events.forEach {
-                    Log.d("Data", it.toString())
-                }
             }
             .addOnFailureListener {
                 _isRefreshing.value = false
-                Log.e("Fetching data", "Failed")
             }
     }
 

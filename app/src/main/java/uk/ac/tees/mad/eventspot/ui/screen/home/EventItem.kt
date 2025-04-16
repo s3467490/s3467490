@@ -1,6 +1,7 @@
 package uk.ac.tees.mad.eventspot.ui.screen.home
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,19 +24,20 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uk.ac.tees.mad.eventspot.R
 import uk.ac.tees.mad.eventspot.model.Event
-import uk.ac.tees.mad.eventspot.ui.theme.EventSpotTheme
 
 @Composable
-fun EventItem(event: Event, borderColor: Color) {
+fun EventItem(event: Event, borderColor: Color, onClick:()->Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp)
+            .clickable {
+                onClick()
+            }
     ) {
         Box(
             modifier = Modifier
