@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
@@ -23,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.android.gms.maps.model.LatLng
 import uk.ac.tees.mad.eventspot.R
 import uk.ac.tees.mad.eventspot.model.Event
 
@@ -65,10 +67,11 @@ fun DetailsScreen(event: Event) {
                 Box(modifier = Modifier
                     .fillMaxWidth()
                     .height(250.dp)
-                    .background(Color.Gray)){
-                    OutlinedButton(onClick = {}, modifier = Modifier
+                    ){
+                    GoogleMapScreen(LatLng(event.latitude, event.longitude), event.location, event.title)
+                    ElevatedButton(onClick = {}, modifier = Modifier
                         .padding(16.dp)
-                        .align(Alignment.BottomEnd)) {
+                        .align(Alignment.BottomStart)) {
                         Text("Get Direction")
                     }
                 }
@@ -77,7 +80,7 @@ fun DetailsScreen(event: Event) {
                         Icon(
                             imageVector = ImageVector.vectorResource(R.drawable.baseline_favorite_border_24),
                             contentDescription = "favorite",
-                            modifier = Modifier.padding(start = 2.dp)
+                            modifier = Modifier.padding(end = 2.dp)
                         )
                         Text("Add to Favorite")
                     }
