@@ -6,7 +6,7 @@ import com.google.gson.Gson
 
 @Entity(tableName = "event_table")
 data class Event(
-    @PrimaryKey val id:String = "",
+    @PrimaryKey(autoGenerate = true) val id:Int = 0,
     val title: String="",
     val date: String="",
     val time: String="",

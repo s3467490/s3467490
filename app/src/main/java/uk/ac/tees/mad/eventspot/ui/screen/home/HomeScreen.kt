@@ -108,7 +108,6 @@ fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth(),
-                            //.padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(

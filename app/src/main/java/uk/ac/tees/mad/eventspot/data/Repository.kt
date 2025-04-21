@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import uk.ac.tees.mad.eventspot.model.Event
 
 interface Repository {
-    suspend fun addEvents(entities:List<Event>)
+    suspend fun addEvent(entity:Event)
     fun getEvents(): Flow<List<Event>>
-    suspend fun deleteAllEvents()
+    suspend fun deleteEvent(entity: Event)
 }

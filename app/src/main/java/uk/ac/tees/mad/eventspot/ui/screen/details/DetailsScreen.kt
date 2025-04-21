@@ -19,17 +19,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.maps.model.LatLng
 import uk.ac.tees.mad.eventspot.R
 import uk.ac.tees.mad.eventspot.model.Event
 
 @Composable
-fun DetailsScreen(event: Event) {
+fun DetailsScreen(event: Event, viewModel: DetailsViewModel = hiltViewModel()) {
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             Text("Event Details",
@@ -75,7 +78,10 @@ fun DetailsScreen(event: Event) {
                         Text("Get Direction")
                     }
                 }
-                OutlinedButton(onClick = {}, modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                OutlinedButton(onClick = {viewModel.addToFavorite(event, context)},
+                    modifier = Modifier
+                        .padding(top = 12.dp)
+                        .align(Alignment.CenterHorizontally)) {
                     Row {
                         Icon(
                             imageVector = ImageVector.vectorResource(R.drawable.baseline_favorite_border_24),

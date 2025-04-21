@@ -7,15 +7,16 @@ import javax.inject.Inject
 class RepositoryImpl @Inject constructor(
     private val eventDao: EventDao
 ):Repository {
-    override suspend fun addEvents(entities: List<Event>) {
-        eventDao.addEvents(entities)
+    override suspend fun addEvent(entity: Event) {
+        eventDao.addEvent(entity)
     }
 
     override fun getEvents(): Flow<List<Event>> {
         return eventDao.getEvents()
     }
 
-    override suspend fun deleteAllEvents() {
-        eventDao.deleteAllEvents()
+    override suspend fun deleteEvent(entity: Event) {
+        eventDao.deleteEvent(entity)
     }
+
 }
