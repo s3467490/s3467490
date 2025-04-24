@@ -1,6 +1,8 @@
 package uk.ac.tees.mad.eventspot.ui.screen.details
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,5 +22,13 @@ class DetailsViewModel @Inject constructor(
             repository.addEvent(event)
             Toast.makeText(context, "Added to Favorite", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun openGoogleMaps(context: Context, destinationLat: Double, destinationLng: Double) {
+        val uri = Uri.parse("google.navigation:q=$destinationLat,$destinationLng")
+        val intent = Intent(Intent.ACTION_VIEW, uri).apply {
+            setPackage("com.google.android.apps.maps") // Opens in Google Maps app
+        }
+        context.startActivity(intent)
     }
 }

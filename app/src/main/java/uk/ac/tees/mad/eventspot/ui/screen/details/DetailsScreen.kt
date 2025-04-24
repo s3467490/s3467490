@@ -72,7 +72,9 @@ fun DetailsScreen(event: Event, viewModel: DetailsViewModel = hiltViewModel()) {
                     .height(250.dp)
                     ){
                     GoogleMapScreen(LatLng(event.latitude, event.longitude), event.location, event.title)
-                    ElevatedButton(onClick = {}, modifier = Modifier
+                    ElevatedButton(onClick = {
+                        viewModel.openGoogleMaps(context, event.latitude, event.longitude)
+                    }, modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.BottomStart)) {
                         Text("Get Direction")
