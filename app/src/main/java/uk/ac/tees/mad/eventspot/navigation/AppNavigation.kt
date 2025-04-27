@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import uk.ac.tees.mad.eventspot.model.Event
 import uk.ac.tees.mad.eventspot.ui.screen.details.DetailsScreen
+import uk.ac.tees.mad.eventspot.ui.screen.favorite.FavoriteScreen
 import uk.ac.tees.mad.eventspot.ui.screen.home.HomeScreen
 import uk.ac.tees.mad.eventspot.ui.screen.home.HomeViewModel
 import uk.ac.tees.mad.eventspot.ui.screen.splash.SplashScreen
@@ -36,6 +37,10 @@ fun AppNavigation() {
                 val decodedJson = URLDecoder.decode(jsonEvent, "UTF-8")
                 val event = Event.fromJson(decodedJson)
             DetailsScreen(event)
+        }
+
+        composable(Constants.FAVORITE_SCREEN) {
+            FavoriteScreen()
         }
     }
 }
