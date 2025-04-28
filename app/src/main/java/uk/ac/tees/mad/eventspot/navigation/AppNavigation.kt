@@ -40,7 +40,7 @@ fun AppNavigation() {
         }
 
         composable(Constants.FAVORITE_SCREEN) {
-            FavoriteScreen()
+            FavoriteScreen(navController)
         }
     }
 }

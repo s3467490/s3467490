@@ -79,7 +79,7 @@ fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
                     modifier = Modifier.weight(1f)
                 )
                 IconButton(
-                    onClick = {},
+                    onClick = {navController.navigate(Constants.FAVORITE_SCREEN)},
                     modifier = Modifier
                         .border(1.dp, color = Color.White, shape = CircleShape)
                 ) {

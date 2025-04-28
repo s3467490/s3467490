@@ -1,6 +1,5 @@
 package uk.ac.tees.mad.eventspot.ui.screen.favorite
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,22 +11,31 @@ import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import uk.ac.tees.mad.eventspot.model.Event
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import uk.ac.tees.mad.eventspot.ui.screen.home.EventItem
+import uk.ac.tees.mad.eventspot.utils.Constants
+import java.net.URLEncoder
 
 @Composable
-fun FavoriteScreen() {
-    val events = emptyList<Event>()
+fun FavoriteScreen(navController: NavController, viewModel: FavoriteViewModel = hiltViewModel()) {
+    val events by viewModel.eventList.collectAsState()
     val colorList = listOf(Color.Red, Color.Magenta, Color.Green, Color.Yellow, Color.Cyan)
+    val context = LocalContext.current
     Scaffold(
+        containerColor = Color.Black,
         topBar = {
             Text("My Favorites",
                 fontSize = 24.sp,
+                color = Color.White,
                 modifier = Modifier.padding(top = 30.dp, start = 16.dp)
             )
         }
@@ -38,7 +46,7 @@ fun FavoriteScreen() {
                     val dismissState = rememberSwipeToDismissBoxState(
                         confirmValueChange = {
                             if (it == SwipeToDismissBoxValue.EndToStart) {
-                                // call function here
+                                viewModel.deleteEvent(context,event)
                                 true
                             } else {
                                 false
@@ -48,16 +56,13 @@ fun FavoriteScreen() {
                     SwipeToDismissBox(
                         state = dismissState,
                         backgroundContent = {
-                            Box(
-                                contentAlignment = Alignment.CenterEnd,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                            ) {
-                                Text("Delete", modifier = Modifier.padding(16.dp))
-                            }
                         }
                     ) {
-                        EventItem(event,colorList[index%5]) { }
+                        EventItem(event,colorList[index%5],
+                            onClick = {
+                                val json = URLEncoder.encode(event.toJson(), "UTF-8")
+                                navController.navigate(Constants.DETAILS_SCREEN+"/$json")
+                            })
                     }
                 }
             }
