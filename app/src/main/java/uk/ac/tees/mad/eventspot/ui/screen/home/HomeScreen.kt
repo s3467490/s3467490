@@ -40,6 +40,7 @@ import uk.ac.tees.mad.eventspot.R
 import uk.ac.tees.mad.eventspot.utils.Constants
 import uk.ac.tees.mad.eventspot.utils.Utils.calculateDistance
 import java.net.URLEncoder
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,6 +50,8 @@ fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
     val isRefreshing by viewModel.isRefreshing.collectAsState()
     val userLocation by viewModel.userLocation.collectAsState()
     var sliderValue by remember { mutableFloatStateOf(50f) }
+    val range = 50..500
+    val steps = (range.last - range.first) / 50
 
     val refreshState = rememberPullToRefreshState()
 
@@ -119,8 +122,12 @@ fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
 
                         Slider(
                             value = sliderValue,
-                            onValueChange = { sliderValue = it },
-                            valueRange = 50f..500f,
+                            onValueChange = { newValue ->
+                                val roundedValue = (newValue / 50).roundToInt() * 50
+                                sliderValue = roundedValue.coerceIn(range).toFloat()
+                            },
+                            valueRange = range.first.toFloat()..range.last.toFloat(),
+                            steps = steps - 1, // Number of steps (excluding start & end)
                             modifier = Modifier.padding(horizontal = 16.dp)
                         )
                     }
